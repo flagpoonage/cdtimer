@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <style type="text/css">
+
+.mbc-field {
+  text-align: center;
+  flex: 1 1 0;
+}
+#mobbin-countdown {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: sans-serif;
+  max-width: 200px;
+}
+.mbc-value {
+  font-weight: bold;
+  font-size: 30px;
+}
+.mbc-unit {
+  text-transform: uppercase;
+  letter-spacing: -0.02rem;
+  font-size: 10px;
+  color: #999;
+}
+        </style>
+        <div id="mobbin-countdown">
+            <div class="mbc-field">
+                <div class="mbc-value" id="mbc-d">
+                    --
+                </div>
+                <div class="mbc-unit">
+                    Days
+                </div>
+            </div>
+            <div class="mbc-field">
+                <div class="mbc-value" id="mbc-h">
+                    --
+                </div>
+                <div class="mbc-unit">
+                    Hours
+                </div>
+            </div>
+            <div class="mbc-field">
+                <div class="mbc-value" id="mbc-m">
+                    --
+                </div>
+                <div class="mbc-unit">
+                    Minutes
+                </div>
+            </div>
+            <div class="mbc-field">
+                <div class="mbc-value" id="mbc-s">
+                    --
+                </div>
+                <div class="mbc-unit">
+                    Seconds
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            const $ = (id) => document.getElementById(id);
+            const tgt = new Date('2024-11-18T16:00:00Z');
+            const d = $('mbc-d'), m = $('mbc-m'), h = $('mbc-h'), s = $('mbc-s');
+
+            const z = (x) => x.toString().length === 1 ? `0${x}` : x;
+
+            function u () {
+                const now = new Date();
+                let diff = tgt.getTime() - now.getTime();
+                let rem = diff < 0 ? 0 : diff;
+                
+                const s_m = 1000,
+                m_m = s_m * 60,
+                h_m = m_m * 60,
+                d_m = h_m * 24;
+
+                const d_mpart = Math.floor(rem / d_m);
+                rem -= d_mpart * d_m;
+
+                const h_mpart = Math.floor(rem / h_m);
+                rem -= h_mpart * h_m;
+
+                const m_mpart = Math.floor(rem / m_m);
+                rem -= m_mpart * m_m;
+
+                const s_mpart = Math.floor(rem / s_m);
+                rem -= s_mpart * s_m;
+
+                d.innerHTML = z(d_mpart);
+                h.innerHTML = z(h_mpart);
+                m.innerHTML = z(m_mpart);
+                s.innerHTML = z(s_mpart);
+
+            }
+
+            u(); setInterval(u, 1000);
+
+        </script>
+    </body>
+</html>
